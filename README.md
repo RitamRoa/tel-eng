@@ -1,6 +1,6 @@
 # Telugu to English Translator
 
-A web-based application that converts Telugu speech to English text. This application runs entirely in the browser and doesn't require any additional installations.
+A web-based application that converts Telugu speech to English text. This application runs entirely in the browser and doesn't require any additional installations. Basically a web app but PWA
 
 ## Features
 
@@ -8,6 +8,7 @@ A web-based application that converts Telugu speech to English text. This applic
 - Live translation to English
 - Responsive design that works on both desktop and mobile devices
 - No installation required
+- Offline
 
 ## How to Use
 
@@ -23,18 +24,6 @@ A web-based application that converts Telugu speech to English text. This applic
 - Microphone access
 - Internet connection (for translation services)
 
-## Note
-
-This is a demo version that uses the Web Speech API for speech recognition. For production use, you would need to:
-
-1. Add a proper translation API (like Google Cloud Translation API)
-2. Handle API keys and authentication
-3. Implement proper error handling and rate limiting
-
-## Running Locally
-
-Simply open the `index.html` file in your web browser. No server setup is required.
-
 ## Mobile Usage
 
 The application is fully responsive and works on mobile devices. You can:
@@ -42,7 +31,9 @@ The application is fully responsive and works on mobile devices. You can:
 1. Host these files on a web server
 2. Access the application through your mobile browser
 3. Use it just like on desktop
+4. You can also download the PWA and use it as a complete app.!!!
 
 ## Browser Support
 
-The application works best in Chrome, as it has the best support for the Web Speech API. Other browsers may have limited functionality
+The application works best in Chrome, as it has the best support for the Web Speech API. Other browsers may have limited functionality.
+thank you for reading....
