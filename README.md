@@ -8,6 +8,7 @@ A web-based application that converts Telugu speech to English text. This applic
 - Live translation to English
 - Responsive design that works on both desktop and mobile devices
 - No installation required
+- You can use the Chrome's "Add to Home Screen" which appears in a drop-down box after pressing the three dots menu. 
 
 
 ## How to Use
@@ -36,4 +37,4 @@ The application is fully responsive and works on mobile devices. You can:
 ## Browser Support
 
 The application works best in Chrome, as it has the best support for the Web Speech API. Other browsers may have limited functionality.
-thank you for reading....
+Thank you for reading....
