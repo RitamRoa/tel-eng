@@ -1,20 +1,20 @@
-// Initialize speech recognition
+// Bringing the function to the home window.
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
-// DOM elements
+
 const startButton = document.getElementById('startRecording');
 const stopButton = document.getElementById('stopRecording');
 const teluguText = document.getElementById('teluguText');
 const englishText = document.getElementById('englishText');
 const status = document.getElementById('status');
 
-// Configure speech recognition
+
 recognition.continuous = true;
 recognition.interimResults = true;
 recognition.lang = 'te-IN'; // Telugu language
 
-// Event listeners
+// Event listener function to start and stop recording the audio from the user 
 startButton.addEventListener('click', startRecording);
 stopButton.addEventListener('click', stopRecording);
 
@@ -50,8 +50,7 @@ recognition.onresult = async (event) => {
     teluguText.textContent = transcript;
     
     try {
-        // For demo purposes, we'll use a simple translation
-        // In a production environment, you would use a proper translation API
+        // Api is good only for laptops please check if using it in mobile.
         const translation = await translateText(transcript);
         englishText.textContent = translation;
     } catch (error) {
@@ -69,7 +68,7 @@ recognition.onerror = (event) => {
     status.classList.remove('recording');
 };
 
-// Simple translation function (now uses a different LibreTranslate instance via CORS proxy)
+//This is the function for translation through api. Right now we are using My memory and please try using libreTranslation
 async function translateText(text) {
     if (!text.trim()) return "";
     try {
