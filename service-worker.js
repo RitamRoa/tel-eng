@@ -1,4 +1,4 @@
-// THIS WHOLE FILE CAN BE DELETED
+
 const CACHE_NAME = 'tel-eng-cache-v1';
 const urlsToCache = [
   '/',
