@@ -1,0 +1,24 @@
+{
+  "name": "tel-eng",
+  "version": "1.0.0",
+  "description": "A web-based application that converts Telugu speech to English text. This application runs entirely in the browser and doesn't require any additional installations. Basically a web app but PWA- Progressive Web App",
+  "main": "app.js",
+  "scripts": {
+    "dev": "live-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RitamRoa/tel-eng.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RitamRoa/tel-eng/issues"
+  },
+  "homepage": "https://github.com/RitamRoa/tel-eng#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
