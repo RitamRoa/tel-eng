@@ -9,12 +9,19 @@ const status = document.getElementById('status');
 
 let recognition;
 let final_transcript = '';
+let isStopping = false; // Add a flag to prevent multiple stop calls
 
 if (SpeechRecognition) {
     startButton.addEventListener('click', startRecording);
     stopButton.addEventListener('click', stopRecording);
+    // Add touchstart event for better mobile support
+    stopButton.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Prevents firing a click event as well
+        stopRecording();
+    });
 
     function startRecording() {
+        isStopping = false; // Reset the flag when starting a new recording
         final_transcript = ''; // Clear previous transcript
         teluguText.textContent = '';
         englishText.textContent = '';
@@ -37,6 +44,7 @@ if (SpeechRecognition) {
         };
 
         recognition.onend = async () => {
+            isStopping = false; // Allow stopping again once finished
             startButton.classList.remove('hidden');
             stopButton.classList.add('hidden');
             status.textContent = 'Processing translation...';
@@ -58,6 +66,7 @@ if (SpeechRecognition) {
         };
 
         recognition.onerror = (event) => {
+            isStopping = false; // Reset on error as well
             console.error('Speech recognition error:', event.error);
             status.textContent = `Error: ${event.error}`;
             startButton.classList.remove('hidden');
@@ -78,7 +87,10 @@ if (SpeechRecognition) {
     }
 
     function stopRecording() {
+        if (isStopping) return; // Prevent multiple calls while stopping
+
         if (recognition) {
+            isStopping = true;
             recognition.stop();
         }
     }
