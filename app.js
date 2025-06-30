@@ -9,50 +9,58 @@ const status = document.getElementById('status');
 
 let recognition;
 let final_transcript = '';
-let isStopping = false; // Add a flag to prevent multiple stop calls
+let isStopping = false;
 
 if (SpeechRecognition) {
     startButton.addEventListener('click', startRecording);
     stopButton.addEventListener('click', stopRecording);
-    // Add touchstart event for better mobile support
     stopButton.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Prevents firing a click event as well
+        e.preventDefault();
         stopRecording();
     });
 
     function startRecording() {
-        isStopping = false; // Reset the flag when starting a new recording
-        final_transcript = ''; // Clear previous transcript
+        console.log("startRecording called");
+        isStopping = false;
         teluguText.textContent = '';
         englishText.textContent = '';
         
         recognition = new SpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
+        recognition.continuous = false; // More reliable on mobile
+        recognition.interimResults = false; // Only get final results
         recognition.lang = 'te-IN';
 
+        recognition.onstart = () => {
+            console.log("Speech recognition started.");
+            status.textContent = 'Listening...';
+        };
+
         recognition.onresult = (event) => {
-            let interim_transcript = '';
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) {
-                    final_transcript += event.results[i][0].transcript;
-                } else {
-                    interim_transcript += event.results[i][0].transcript;
-                }
-            }
-            teluguText.textContent = final_transcript + interim_transcript;
+            console.log("onresult event fired.");
+            const transcript = event.results[0][0].transcript;
+            teluguText.textContent = transcript;
+        };
+
+        recognition.onspeechend = () => {
+            console.log("Speech has stopped being detected, stopping recognition.");
+            // The browser will automatically stop, but we can be explicit
+            stopRecording(); 
         };
 
         recognition.onend = async () => {
-            isStopping = false; // Allow stopping again once finished
+            console.log("Speech recognition service has disconnected.");
+            if (!isStopping) return; // Prevent running on auto-stops before user action
+            
+            isStopping = false;
             startButton.classList.remove('hidden');
             stopButton.classList.add('hidden');
             status.textContent = 'Processing translation...';
             status.classList.remove('recording');
 
-            if (final_transcript) {
+            const transcriptToTranslate = teluguText.textContent;
+            if (transcriptToTranslate) {
                 try {
-                    const translation = await translateText(final_transcript);
+                    const translation = await translateText(transcriptToTranslate);
                     englishText.textContent = translation;
                     status.textContent = 'Ready to record';
                 } catch (error) {
@@ -66,8 +74,8 @@ if (SpeechRecognition) {
         };
 
         recognition.onerror = (event) => {
-            isStopping = false; // Reset on error as well
             console.error('Speech recognition error:', event.error);
+            isStopping = false;
             status.textContent = `Error: ${event.error}`;
             startButton.classList.remove('hidden');
             stopButton.classList.add('hidden');
@@ -87,11 +95,17 @@ if (SpeechRecognition) {
     }
 
     function stopRecording() {
-        if (isStopping) return; // Prevent multiple calls while stopping
-
+        console.log("stopRecording called");
+        if (isStopping) {
+            console.log("Already stopping, returning.");
+            return;
+        }
         if (recognition) {
+            console.log("Calling recognition.stop()");
             isStopping = true;
             recognition.stop();
+        } else {
+            console.log("No recognition instance to stop.");
         }
     }
 } else {
